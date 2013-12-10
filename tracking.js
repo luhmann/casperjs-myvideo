@@ -3,7 +3,6 @@ var casper = require('casper').create( {
 		'includes/jasmine.js',
 		'includes/jasmine-jquery.js',
 		'includes/jasmine-tap-reporter.js',
-		'includes/tracker_ga_test.js',
 		'includes/tracking_test.js'
 	],
 	verbose: true,
