@@ -1,12 +1,17 @@
+//var baseUrl = 'http://www.myvideo.de/';
+var baseUrl = 'http://www.magic-preview.de/';
+//var baseUrl = 'http://frontend.integration.magic-technik.de/';
+var testScript = 'home_tracking_test.js'
+
 var casper = require('casper').create( {
 	clientScripts: [
 		'includes/jasmine.js',
 		'includes/jasmine-jquery.js',
 		'includes/jasmine-tap-reporter.js',
-		'includes/tracking_test.js'
+    'includes/' + testScript
 	],
 	verbose: true,
-    logLevel: 'info'
+  logLevel: 'info'
 });
 
 casper.on('remote.message', function (message) {
@@ -17,14 +22,18 @@ casper.on('page.error', function(msg, trace) {
     this.log('Error: ' + msg, 'error');
 });
 
-casper.start('http://www.myvideo.de/?testTrackingLive=true', function() {
+casper.start(baseUrl + '?testTrackingLive=true', function() {
     this.evaluate(function () {
     	console.log('Remote Handshake worked')
+      $ = jQuery = MV.jQuery;
+
     	var jasmineEnv = jasmine.getEnv();
   		jasmineEnv.updateInterval = 250;
   		jasmineEnv.addReporter(new jasmine.TapReporter());
     	jasmineEnv.execute();
 	});
 });
+
+casper.setHttpAuth('myvideo', 'kooyoe1Shain');
 
 casper.run();
