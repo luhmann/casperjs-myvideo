@@ -4,6 +4,7 @@ var baseUrl = 'http://www.magic-preview.de/';
 //var baseUrl = 'http://frontend.integration.magic-technik.de/';
 var testScripts = {
   home: 'specs/home.js',
+  homeTooltip: 'specs/homeTooltip.js',
   serp: 'specs/serp.js',
   serpNoResults: 'specs/serp_noResults.js'
 };
@@ -39,6 +40,7 @@ casper.on('page.error', function(msg, trace) {
     this.log('Error: ' + msg, 'error');
 });
 
+//Home
 casper.start(baseUrl + parameter, function() {
     casper.page.injectJs(testScripts.home);
 
@@ -51,6 +53,23 @@ casper.start(baseUrl + parameter, function() {
 	  });
 });
 
+//Tooltips on Home (need to trigger mouseenter event)
+casper.thenOpen(baseUrl + parameter, function() {
+    casper.page.injectJs(testScripts.homeTooltip);
+
+    this.evaluate(function () {
+      $ = jQuery = MV.jQuery;
+
+      $('.sushi--item.is-video').trigger('mouseenter');
+
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 250;
+      jasmineEnv.addReporter(new jasmine.TapReporter());
+      jasmineEnv.execute();
+    });
+});
+
+//SERP with results
 casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpResults, function() {
     casper.page.injectJs(testScripts.serp);
 
@@ -63,6 +82,7 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpR
     });
 });
 
+//SERP without results
 casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpNoResults, function() {
     casper.page.injectJs(testScripts.serpNoResults);
 
