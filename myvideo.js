@@ -4,13 +4,15 @@ var baseUrl = 'http://www.magic-preview.de/';
 //var baseUrl = 'http://frontend.integration.magic-technik.de/';
 var testScripts = {
   home: 'specs/home.js',
-  serp: 'specs/serp.js'
+  serp: 'specs/serp.js',
+  serpNoResults: 'specs/serp_noResults.js'
 };
 
 var parameter = '?testTrackingLive=true';
 
 var additionalParameters = {
-  serpResults: '&q=Madonna'
+  serpResults: '&q=Madonna',
+  serpNoResults: '&q=fdskljgjhksdfhg'
 };
 
 var urlParts = {
@@ -26,7 +28,7 @@ var casper = require('casper').create( {
 		'includes/jasmine-tap-reporter.js'
 	],
 	verbose: true,
-  logLevel: 'debug'
+  logLevel: 'info'
 });
 
 casper.on('remote.message', function (message) {
@@ -51,6 +53,18 @@ casper.start(baseUrl + parameter, function() {
 
 casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpResults, function() {
     casper.page.injectJs(testScripts.serp);
+
+    this.evaluate(function () {
+      $ = jQuery = MV.jQuery;
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 250;
+      jasmineEnv.addReporter(new jasmine.TapReporter());
+      jasmineEnv.execute();
+    });
+});
+
+casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpNoResults, function() {
+    casper.page.injectJs(testScripts.serpNoResults);
 
     this.evaluate(function () {
       $ = jQuery = MV.jQuery;
