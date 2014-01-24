@@ -7,7 +7,8 @@ var testScripts = {
   homeTooltip: 'specs/homeTooltip.js',
   homeAutocomplete: 'specs/homeAutocomplete.js',
   serp: 'specs/serp.js',
-  serpNoResults: 'specs/serp_noResults.js',
+  serpNoResults: 'specs/serpNoResults.js',
+  serpAutocomplete: 'specs/serpAutocomplete.js',
   legacyFirstLevel: 'specs/legacyHome.js'
 };
 
@@ -89,12 +90,13 @@ casper.thenOpen(baseUrl + parameter, function() {
 casper.thenOpen(baseUrl + parameter, function() {
     printSeparator(this, 'Test Tracking: Home Next Level -- Header Autocomplete');
     casper.page.injectJs(testScripts.homeAutocomplete);
-    this.sendKeys('.header', 'Mad');
+    this.sendKeys('.header--search-field', 'Mad');
 
     //Lets give the autocomplete some time to react
-    this.wait(500, function () {
+    this.wait(1000, function () {
       this.evaluate(function () {
-            MV.testing.globalizeLibs();        
+            MV.testing.globalizeLibs();
+            console.log('Num visible autocomplete options: ' + $('.autocomplete--option').length);
             MV.testing.execute();
         });
     });
@@ -111,6 +113,7 @@ casper.thenOpen(baseUrl + urlParts.legacyFirstLevel + parameter, function () {
     });
 });
 
+//Legacy Home second level -- just menu
 casper.thenOpen(baseUrl + urlParts.legacySecondLevel + parameter, function () {
   printSeparator(this, 'Test Tracking: Home UGC/Legacy -- Navigation - Page on Second Url Level');
   casper.page.injectJs(testScripts.legacyFirstLevel);
@@ -151,6 +154,22 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpN
     this.evaluate(function () {
       MV.testing.globalizeLibs();
       MV.testing.execute();
+    });
+});
+
+//SERP plain -- Autocomplete
+casper.thenOpen(baseUrl + urlParts.serp + parameter, function() {
+    printSeparator(this, 'Test Tracking: SERP Autocomplete');
+    casper.page.injectJs(testScripts.serpAutocomplete);
+    this.sendKeys('.search--input', 'Mad');
+
+    //Lets give the autocomplete some time to react
+    this.wait(1000, function () {
+      this.evaluate(function () {
+            MV.testing.globalizeLibs();    
+            console.log('Num visible autocomplete options: ' + $('.autocomplete--option').length);    
+            MV.testing.execute();
+        });
     });
 });
 
