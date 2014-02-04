@@ -73,7 +73,7 @@ casper.start(baseUrl + parameter, function() {
     casper.page.injectJs(testScripts.home);
 
     this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       MV.testing.execute();
 	  });
 });
@@ -84,7 +84,7 @@ casper.thenOpen(baseUrl + parameter, function() {
     casper.page.injectJs(testScripts.homeTooltip);
 
     this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       $('.sushi--item.is-video').trigger('mouseenter');
       MV.testing.execute();
     });
@@ -99,7 +99,7 @@ casper.thenOpen(baseUrl + parameter, function() {
     //Lets give the autocomplete some time to react
     this.wait(1000, function () {
       this.evaluate(function () {
-            var $ = jQuery = MV.jQuery;;
+            var $ = jQuery = MV.jQuery;
             console.log('Num visible autocomplete options: ' + $('.autocomplete--option').length);
             MV.testing.execute();
         });
@@ -112,7 +112,7 @@ casper.thenOpen(baseUrl + urlParts.legacyFirstLevel + parameter, function () {
   casper.page.injectJs(testScripts.legacyFirstLevel);
 
     this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       MV.testing.execute();
     });
 });
@@ -123,7 +123,7 @@ casper.thenOpen(baseUrl + urlParts.legacySecondLevel + parameter, function () {
   casper.page.injectJs(testScripts.legacyFirstLevel);
 
     this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       MV.testing.execute();
     });
 });
@@ -134,7 +134,7 @@ casper.thenOpen(baseUrl + urlParts.webstars + parameter, function () {
   casper.page.injectJs(testScripts.legacyFirstLevel);
 
     this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       MV.testing.execute();
     });
 });
@@ -145,7 +145,7 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpR
     casper.page.injectJs(testScripts.serp);
 
     this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       MV.testing.execute();
     });
 });
@@ -156,7 +156,7 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpN
     casper.page.injectJs(testScripts.serpNoResults);
 
     this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       MV.testing.execute();
     });
 });
@@ -170,7 +170,7 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter, function() {
     //Lets give the autocomplete some time to react
     this.wait(1000, function () {
       this.evaluate(function () {
-            var $ = jQuery = MV.jQuery;;    
+            var $ = jQuery = MV.jQuery;    
             console.log('Num visible autocomplete options: ' + $('.autocomplete--option').length);    
             MV.testing.execute();
         });
@@ -183,11 +183,9 @@ casper.thenOpen(baseUrl + urlParts.tagpage + parameter, function () {
   casper.page.injectJs(testScripts.tagpage);
 
   this.evaluate(function () {
-      var $ = jQuery = MV.jQuery;;
+      var $ = jQuery = MV.jQuery;
       MV.testing.execute();
     });
 });
-
-casper.setHttpAuth('myvideo', 'kooyoe1Shain');
 
 casper.run();
