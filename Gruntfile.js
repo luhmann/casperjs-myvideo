@@ -1,13 +1,21 @@
-grunt.loadNpmTasks('grunt-casperjs');
-grunt.registerTask('test', ['casperjs']);
+'use strict';
+module.exports = function(grunt) {
+grunt.loadNpmTasks('grunt-casper');
+grunt.registerTask('test', ['casper']);
 
-grunt.initConfig({
-  casperjs: {
-    options: {
-      async: {
-        parallel: false
+  grunt.initConfig({
+    casper : {
+     myvideo : {
+        options : {
+          test : false
+        },
+        files : {
+          'casper-results.xml' : ['tracking.js']
+        }
       }
-    },
-    files: ['tracking.js']
-  },
-})
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-casperjs');
+  grunt.registerTask('test', ['casperjs']);
+};
