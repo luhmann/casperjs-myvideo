@@ -93,6 +93,12 @@
             }
         },
 
+        warn: function (str) {
+            if (console && console.log) {
+                console.log('[WARN] ' + str);
+            }
+        },
+
         error: function (str) {
             if (console && console.log) {
                 console.log('[ERROR] ' + str);

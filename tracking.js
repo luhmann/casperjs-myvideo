@@ -1,7 +1,7 @@
 //var baseUrl = 'http://frontend.dev-fe-vagrant.magic-technik.de/';
-//var baseUrl = 'http://www.myvideo.de/';
+var baseUrl = 'http://www.myvideo.de/';
 //var baseUrl = 'http://www.magic-preview.de/';
-var baseUrl = 'http://frontend.integration.magic-technik.de/';
+//var baseUrl = 'http://frontend.integration.magic-technik.de/';
 var testScripts = {
   home: 'specs/home.js',
   homeTooltip: 'specs/homeTooltip.js',
@@ -9,14 +9,16 @@ var testScripts = {
   serp: 'specs/serp.js',
   serpNoResults: 'specs/serpNoResults.js',
   serpAutocomplete: 'specs/serpAutocomplete.js',
-  legacyFirstLevel: 'specs/legacyHome.js'
+  legacyFirstLevel: 'specs/legacyHome.js',
+  tagpage: 'specs/tagpage.js'
 };
 
 var urlParts = {
   serp: 'search',
   legacyFirstLevel: 'Filme',
   legacySecondLevel: 'Filme/Action',
-  webstars: 'webstars'
+  webstars: 'webstars',
+  tagpage: 'Themen/Infotainment/videos/shades-of-grey'
 };
 
 var parameter = '?testTrackingLive=true';
@@ -53,6 +55,8 @@ var casper = require('casper').create( {
 casper.on('remote.message', function (message) {
   if (message.substring(0, 7) == '[ERROR]') {
     this.log(message, 'error');
+  } else if (message.substring(0, 6) == '[WARN]') {
+    this.log(message, 'warning');
   } else {
 	 this.log(message, 'info');
   }
@@ -69,7 +73,7 @@ casper.start(baseUrl + parameter, function() {
     casper.page.injectJs(testScripts.home);
 
     this.evaluate(function () {
-      MV.testing.globalizeLibs();
+      var $ = jQuery = MV.jQuery;;
       MV.testing.execute();
 	  });
 });
@@ -80,7 +84,7 @@ casper.thenOpen(baseUrl + parameter, function() {
     casper.page.injectJs(testScripts.homeTooltip);
 
     this.evaluate(function () {
-      MV.testing.globalizeLibs();
+      var $ = jQuery = MV.jQuery;;
       $('.sushi--item.is-video').trigger('mouseenter');
       MV.testing.execute();
     });
@@ -95,7 +99,7 @@ casper.thenOpen(baseUrl + parameter, function() {
     //Lets give the autocomplete some time to react
     this.wait(1000, function () {
       this.evaluate(function () {
-            MV.testing.globalizeLibs();
+            var $ = jQuery = MV.jQuery;;
             console.log('Num visible autocomplete options: ' + $('.autocomplete--option').length);
             MV.testing.execute();
         });
@@ -108,7 +112,7 @@ casper.thenOpen(baseUrl + urlParts.legacyFirstLevel + parameter, function () {
   casper.page.injectJs(testScripts.legacyFirstLevel);
 
     this.evaluate(function () {
-      MV.testing.globalizeLibs();
+      var $ = jQuery = MV.jQuery;;
       MV.testing.execute();
     });
 });
@@ -119,7 +123,7 @@ casper.thenOpen(baseUrl + urlParts.legacySecondLevel + parameter, function () {
   casper.page.injectJs(testScripts.legacyFirstLevel);
 
     this.evaluate(function () {
-      MV.testing.globalizeLibs();
+      var $ = jQuery = MV.jQuery;;
       MV.testing.execute();
     });
 });
@@ -130,7 +134,7 @@ casper.thenOpen(baseUrl + urlParts.webstars + parameter, function () {
   casper.page.injectJs(testScripts.legacyFirstLevel);
 
     this.evaluate(function () {
-      MV.testing.globalizeLibs();
+      var $ = jQuery = MV.jQuery;;
       MV.testing.execute();
     });
 });
@@ -141,7 +145,7 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpR
     casper.page.injectJs(testScripts.serp);
 
     this.evaluate(function () {
-      MV.testing.globalizeLibs();
+      var $ = jQuery = MV.jQuery;;
       MV.testing.execute();
     });
 });
@@ -152,7 +156,7 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter + additionalParameters.serpN
     casper.page.injectJs(testScripts.serpNoResults);
 
     this.evaluate(function () {
-      MV.testing.globalizeLibs();
+      var $ = jQuery = MV.jQuery;;
       MV.testing.execute();
     });
 });
@@ -166,10 +170,21 @@ casper.thenOpen(baseUrl + urlParts.serp + parameter, function() {
     //Lets give the autocomplete some time to react
     this.wait(1000, function () {
       this.evaluate(function () {
-            MV.testing.globalizeLibs();    
+            var $ = jQuery = MV.jQuery;;    
             console.log('Num visible autocomplete options: ' + $('.autocomplete--option').length);    
             MV.testing.execute();
         });
+    });
+});
+
+//Tagpage
+casper.thenOpen(baseUrl + urlParts.tagpage + parameter, function () {
+  printSeparator(this, 'Test Tracking: Tagpage');
+  casper.page.injectJs(testScripts.tagpage);
+
+  this.evaluate(function () {
+      var $ = jQuery = MV.jQuery;;
+      MV.testing.execute();
     });
 });
 
