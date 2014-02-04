@@ -3,3 +3,5 @@
 
 #Ignore PHP-Storm Folder
 /.idea
+
+node_modules
