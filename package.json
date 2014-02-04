@@ -1,0 +1,8 @@
+"scripts": {
+  "test": "grunt test"
+}
+
+"devDependencies": {
+  "grunt": "0.4.2",
+  "grunt-casperjs": "1.4.1"
+}
