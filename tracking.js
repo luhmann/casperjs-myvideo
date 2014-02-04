@@ -188,4 +188,6 @@ casper.thenOpen(baseUrl + urlParts.tagpage + parameter, function () {
     });
 });
 
+//Add playerpage
+
 casper.run();
