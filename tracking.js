@@ -48,6 +48,10 @@ var casper = require('casper').create( {
     width: 1000,
     height: 2000
   },
+  pageSettings: {
+      loadImages:  false,
+      loadPlugins: false
+  },
 	verbose: true,
   logLevel: 'info'
 });
