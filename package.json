@@ -1,12 +1,16 @@
 {
   "name": "casperjs-myvideo",
   "version": "0.0.1",
+  "repository" : { 
+    "type" : "git",
+     "url" : "https://github.com/luhmann/casperjs-myvideo"
+  },
   "scripts": {
     "test": "grunt test"
   },
   "devDependencies": {
     "grunt": "0.4.2",
-    "grunt-casper": "1.4.0"
+    "grunt-casper": "0.2.1"
   },
   "engines": {
     "node": "0.10.22"
