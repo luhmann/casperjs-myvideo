@@ -83,7 +83,7 @@ casper.start(baseUrl + parameter, function() {
 });
 
 //Tooltips on Home (need to trigger mouseenter event)
-casper.thenOpen(baseUrl + parameter, function() {
+/*casper.thenOpen(baseUrl + parameter, function() {
     printSeparator(this, 'Test Tracking: Home Next Level -- Tooltips');
     casper.page.injectJs(testScripts.homeTooltip);
 
@@ -190,6 +190,19 @@ casper.thenOpen(baseUrl + urlParts.tagpage + parameter, function () {
       var $ = jQuery = MV.jQuery;
       MV.testing.execute();
     });
+});*/
+
+var testResults;
+
+casper.then(function () {
+    testResults = this.evaluate(function () {
+      return jasmine.results;
+    });
+
+    if(testResults.length > 0) {
+      casper.exit();
+    }
+
 });
 
 //Add playerpage

@@ -3,6 +3,8 @@
         throw new Exception("jasmine library does not exist in global namespace!");
     }
 
+    jasmine.results = jasmine.results || [];
+
     /**
      * TAP (http://en.wikipedia.org/wiki/Test_Anything_Protocol) reporter.
      * outputs spec results to the console.
@@ -63,7 +65,9 @@
                         errorMessage += '\n  '+ stackMessage;
                     }
                 }
-            }
+
+                jasmine.results.push(resultText +" "+ (spec.id + 1) +" - "+ spec.suite.description +" : "+ spec.description);
+            }            
 
             this.log(resultText +" "+ (spec.id + 1) +" - "+ spec.suite.description +" : "+ spec.description + errorMessage);
         },
