@@ -16,6 +16,6 @@ grunt.registerTask('test', ['casper']);
     }
   });
 
-  grunt.loadNpmTasks('grunt-casperjs');
+  grunt.loadNpmTasks('grunt-casper');
   grunt.registerTask('test', ['casper']);
 };
